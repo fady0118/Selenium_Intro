@@ -1,0 +1,41 @@
+ /* create logger object */
+     private static final Logger logger = Logger.getLogger(basetests.class.getName());
+
+ /* find  elements */
+        List<WebElement> Links = driver.findElements(By.tagName("a"));
+        System.out.println(Links.size());
+        /* find  element */
+            //        WebElement inputsLink = driver.findElement(By.linkText("Inputs"));
+            //        inputsLink.click(); // click on it
+
+        /* Shifting Content exercise */
+
+            // Click on the first link
+            WebElement ShiftContent = driver.findElement(By.linkText("Shifting Content"));
+            ShiftContent.click();
+
+            // waiting
+            // 1. start the wait log this will help us measure how much time we waited
+            Instant start = Instant.now();
+            logger.info("waiting for Example 1 starts");
+            // 2. Wait for the new page to load
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            WebElement Example_1 = wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Example 1: Menu Element")));
+            // 3. end the wait log & calc duration
+            Instant end = Instant.now();
+            Duration time_elaspsed = Duration.between(start,end);
+            logger.info("Example 1 is visible waited for:"+time_elaspsed.toMillis()+" msec.");
+
+            // Click on the next element
+            Example_1.click();
+            // Wait for the new page to load
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Home")));
+            // find all list elements
+            List<WebElement> menuitems = driver.findElements(By.tagName("li"));
+            System.out.println("Number of menu items:"+menuitems.size());
+
+
+        /*  change window size fullscreen/maximize/setsize etc */
+//        driver.manage().window().setSize(new Dimension(400,1000));
+        /* Close session [driver.close() closes the browser but quit closes the session as well] */
+//        driver.quit();
